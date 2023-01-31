@@ -1,4 +1,4 @@
-export const guard = <T, R>(...fns: ((v: T) => R)[]) => {
+export const match = <T, R>(...fns: ((v: T) => R)[]) => {
   return (v: T) => {
     for (const fn of fns) {
       const x = fn(v)

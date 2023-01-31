@@ -1,4 +1,4 @@
-import { isFunc } from './is'
+import { isFunc, isObj } from './is'
 import { Compact, Dict, Merge, Split, SplitProp } from './types'
 
 export const fromEntries = <T extends Dict>(
@@ -67,3 +67,35 @@ export const split =
     const fn = (key: any) => split(Array.isArray(key) ? key : dKeys.filter(key))
     return keys.map(fn).concat(split(dKeys)) as any
   }
+
+export const clone = <T extends Dict>(obj: T): T => structuredClone(obj)
+
+export function merge<T, U>(source: U): (target: T) => Merge<[T, U]>
+export function merge<T, U, V>(
+  target: T
+): (source: U, source2: V) => Merge<[T, U, V]>
+export function merge<T, U, V, W>(
+  target: T
+): (source: U, source2: V, source3: W) => Merge<[T, U, V, W]>
+export function merge<T, U, V, W, X>(
+  target: T
+): (source: U, source2: V, source3: W, source4: X) => Merge<[T, U, V, W, X]>
+export function merge(...args: Dict[]) {
+  return (obj: any) => {
+    if (!args.length) return obj
+    for (let i = 1; i < args.length; i++) {
+      const source = { ...args[i] }
+      for (let key in source) {
+        const targValue = obj[key]
+        const srcValue = source[key]
+        if (isObj(targValue) && isObj(srcValue)) {
+          obj[key] = merge(srcValue)(targValue)
+        } else {
+          obj[key] = srcValue
+        }
+      }
+    }
+
+    return obj
+  }
+}
