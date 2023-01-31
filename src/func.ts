@@ -153,3 +153,12 @@ export const log =
   }
 
 export const done = () => void 0
+
+export const memo = <T extends (...args: any[]) => any>(fn: T): T => {
+  const cache = Object.create(null)
+  const func = (arg: any) => {
+    if (cache[arg] === undefined) cache[arg] = fn(arg)
+    return cache[arg]
+  }
+  return func as T
+}
