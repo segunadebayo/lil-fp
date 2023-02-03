@@ -1,6 +1,6 @@
 {
   "name": "lil-fp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Functional programming utilities for TypeScript",
   "main": "src/index.ts",
   "files": [
