@@ -1,8 +1,23 @@
 {
   "name": "lil-fp",
-  "version": "1.0.3",
+  "version": "1.0.6",
   "description": "Functional programming utilities for TypeScript",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.mjs",
+      "require": "./dist/*.js"
+    },
+    "./package.json": "./package.json"
+  },
   "files": [
     "dist",
     "src"
@@ -11,9 +26,7 @@
   "scripts": {
     "build": "tsup src --format=esm,cjs --dts --minify --clean",
     "release": "pnpm changeset version && pnpm changeset publish",
-    "prepack": "clean-package",
-    "postpack": "clean-package restore",
-    "prepublishOnly": "pnpm build"
+    "prerelease": "pnpm build"
   },
   "publishConfig": {
     "access": "public"
@@ -30,7 +43,6 @@
     "@changesets/cli": "^2.26.0",
     "prettier": "^2.8.3",
     "tsup": "^6.5.0",
-    "typescript": "^4.9.4",
-    "clean-package": "^2.2.0"
+    "typescript": "^4.9.4"
   }
 }
