@@ -59,3 +59,11 @@ export type Split<T, K extends SplitProp<T>[]> = [
   },
   Omit<T, K[number][number]>
 ]
+
+export type PromiseFactory<T = unknown> = () => PromiseLike<T>
+
+export type Awaited<T> = T extends undefined
+  ? T
+  : T extends PromiseLike<infer U>
+  ? U
+  : T

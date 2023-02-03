@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -13,16 +14,18 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./*": {
       "types": "./dist/*.d.ts",
-      "import": "./dist/*.js"
+      "import": "./dist/*.js",
+      "require": "./dist/*.cjs"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsup src --format=esm --dts --no-splitting --minify --clean"
+    "build": "tsup src --format=esm,cjs --dts --no-splitting --minify --clean"
   },
   "keywords": [
     "fp",
@@ -33,9 +36,12 @@
   "author": "Segun Adebayo",
   "license": "MIT",
   "devDependencies": {
+    "@changesets/cli": "^2.26.0",
     "prettier": "^2.8.3",
     "tsup": "^6.5.0",
-    "typescript": "^4.9.4",
-    "@changesets/cli": "^2.26.0"
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "p-all": "^4.0.0"
   }
 }
