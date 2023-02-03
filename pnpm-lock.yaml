@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@changesets/cli': ^2.26.0
+  clean-package: ^2.2.0
   p-all: ^4.0.0
   prettier: ^2.8.3
   tsup: ^6.5.0
@@ -12,6 +13,7 @@ dependencies:
 
 devDependencies:
   '@changesets/cli': 2.26.0
+  clean-package: 2.2.0
   prettier: 2.8.3
   tsup: 6.5.0_typescript@4.9.4
   typescript: 4.9.4
@@ -499,6 +501,13 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /clean-package/2.2.0:
+    resolution: {integrity: sha512-vLv8kRqvh4smPDpqAYFPLEijTppAd/cfCz4yBcUGoVl/JKu6ZWKhlo+G/cAmwlSa29RudfBeuyiNEzas8bTwEQ==}
+    hasBin: true
+    dependencies:
+      dot-prop: 6.0.1
+    dev: true
+
   /clean-stack/4.2.0:
     resolution: {integrity: sha512-LYv6XPxoyODi36Dp976riBtSY27VmFo+MKqEU9QCCWyTrdEPDog+RWA7xQWHi6Vbp61j5c4cdzzX1NidnwtUWg==}
     engines: {node: '>=12'}
@@ -646,6 +655,13 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-type: 4.0.0
+    dev: true
+
+  /dot-prop/6.0.1:
+    resolution: {integrity: sha512-tE7ztYzXHIeyvc7N+hR3oi7FIbf/NIjVP9hmAt3yMXzrQ072/fpjGLx2GxNxGxUl5V73MEqYzioOMoVhGMJ5cA==}
+    engines: {node: '>=10'}
+    dependencies:
+      is-obj: 2.0.0
     dev: true
 
   /emoji-regex/8.0.0:
@@ -1359,6 +1375,11 @@ packages:
   /is-number/7.0.0:
     resolution: {integrity: sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==}
     engines: {node: '>=0.12.0'}
+    dev: true
+
+  /is-obj/2.0.0:
+    resolution: {integrity: sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==}
+    engines: {node: '>=8'}
     dev: true
 
   /is-plain-obj/1.1.0:

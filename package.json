@@ -1,31 +1,18 @@
 {
   "name": "lil-fp",
-  "version": "1.0.1",
-  "description": "",
-  "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "1.0.2",
+  "description": "Functional programming utilities for TypeScript",
+  "main": "src/index.ts",
   "files": [
     "dist",
     "src"
   ],
   "sideEffects": false,
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
-    },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.js",
-      "require": "./dist/*.cjs"
-    },
-    "./package.json": "./package.json"
-  },
   "scripts": {
-    "build": "tsup src --format=esm,cjs --dts --no-splitting --minify --clean",
+    "build": "tsup src --format=esm,cjs --dts --minify --clean",
+    "release": "pnpm changeset version && pnpm changeset publish",
+    "prepack": "clean-package",
+    "postpack": "clean-package restore",
     "prepublishOnly": "pnpm build"
   },
   "publishConfig": {
@@ -43,7 +30,8 @@
     "@changesets/cli": "^2.26.0",
     "prettier": "^2.8.3",
     "tsup": "^6.5.0",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "clean-package": "^2.2.0"
   },
   "dependencies": {
     "p-all": "^4.0.0"
