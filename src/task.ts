@@ -1,6 +1,5 @@
 import { pipe } from './func'
-import { Dict, PromiseFactory } from './types'
-import pAll, { Options as PAllOptions } from 'p-all'
+import { Dict } from './types'
 
 export const toError = (err: any) =>
   err instanceof Error ? err : new Error(err)
@@ -96,13 +95,3 @@ export const bindTo =
       task,
       map((v) => ({ [key]: v } as Record<K, T>))
     )
-
-export function all<T extends PromiseFactory[]>(
-  tasks: readonly [...T],
-  options?: PAllOptions
-): Promise<{
-  [P in keyof T]: T[P] extends () => unknown ? Awaited<ReturnType<T[P]>> : T[P]
-}>
-export function all(items: any, options?: PAllOptions) {
-  return pAll(items, options)
-}
