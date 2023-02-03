@@ -99,3 +99,14 @@ export function merge(...args: Dict[]) {
     return obj
   }
 }
+
+export const deleteKeys =
+  <T extends Dict, K extends keyof T>(key: K | K[]) =>
+  (obj: T): Omit<T, K> => {
+    const clone = { ...obj }
+    const keys = Array.isArray(key) ? key : [key]
+    for (let i = 0; i < keys.length; i++) {
+      delete clone[keys[i]]
+    }
+    return clone
+  }
