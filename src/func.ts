@@ -134,8 +134,8 @@ export function flow<A extends any[], B, C, D, E, F, G, H, I, J>(
   fn8: (arg: H) => I,
   fn9: (arg: I) => J
 ): (...args: A) => J
-export function flow<T>(...functions: Array<(arg: T) => T>) {
-  return (input: T) => functions.reduce((acc, fn) => fn(acc), input)
+export function flow(...functions: any[]) {
+  return (input: any) => functions.reduce((acc, fn) => fn(acc), input)
 }
 
 export function tap<T>(fn: (value: T) => void) {
