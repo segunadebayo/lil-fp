@@ -1,6 +1,6 @@
 {
   "name": "lil-fp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "type": "module",
   "main": "dist/index.cjs",
@@ -25,7 +25,11 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsup src --format=esm,cjs --dts --no-splitting --minify --clean"
+    "build": "tsup src --format=esm,cjs --dts --no-splitting --minify --clean",
+    "prepublishOnly": "pnpm build"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "keywords": [
     "fp",
