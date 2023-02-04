@@ -23,7 +23,7 @@ export type Awaited<T> = T extends undefined
   ? U
   : T
 
-type Simplify<T> = T extends any ? { [K in keyof T]: T[K] } : T
+export type Simplify<T> = T extends any ? { [K in keyof T]: T[K] } : T
 
 type Merge<P1 = {}, P2 = {}> = Omit<P1, keyof P2> & P2
 

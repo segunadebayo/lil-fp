@@ -1,5 +1,5 @@
 import { isFunc, isObj } from './is'
-import { Compact, Dict, Assign, Split, SplitProp } from './types'
+import { Compact, Dict, Assign, Split, SplitProp, Simplify } from './types'
 
 export const fromEntries = <T extends Dict>(
   entries:
@@ -41,7 +41,7 @@ export const keys = <T extends Dict>(obj: T): (keyof T)[] =>
   Object.keys(obj) as string[]
 
 export const filter =
-  <T extends Dict>(f: (key: string, value: T[keyof T]) => boolean) =>
+  <T extends Dict>(f: (key: keyof T, value: T[keyof T]) => boolean) =>
   (obj: T): T =>
     fromEntries(Object.entries(obj).filter(([k, v]) => f(k, v)))
 
@@ -100,15 +100,26 @@ export function merge(...args: Dict[]) {
   }
 }
 
-export const deleteKeys =
-  <T extends Dict, K extends keyof T>(key: K | K[]) =>
-  (obj: T): Omit<T, K> => {
-    const clone = { ...obj }
-    const keys = Array.isArray(key) ? key : [key]
+export const omit =
+  <T extends Dict, K extends keyof T>(keys: K[]) =>
+  (obj: T): Simplify<Omit<T, K>> => {
+    const clone: any = { ...obj }
     for (let i = 0; i < keys.length; i++) {
       delete clone[keys[i]]
     }
     return clone
+  }
+
+export const cast = <T>(v: any): T => v
+
+export const pick =
+  <T extends Dict, K extends keyof T>(keys: K[]) =>
+  (obj: T): Simplify<Pick<T, K>> => {
+    const clone: any = {}
+    for (let i = 0; i < keys.length; i++) {
+      clone[keys[i]] = obj[keys[i]]
+    }
+    return clone as any
   }
 
 interface Bind {
@@ -118,7 +129,7 @@ interface Bind {
 }
 
 export const bind: Bind = (key, fn) => (obj) =>
-  ({
+  cast({
     ...obj,
     [key]: fn(obj[key]),
-  } as any)
+  })
