@@ -1,5 +1,5 @@
 import { isFunc, isObj } from './is'
-import { Compact, Dict, Merge, Split, SplitProp } from './types'
+import { Compact, Dict, Assign, Split, SplitProp } from './types'
 
 export const fromEntries = <T extends Dict>(
   entries:
@@ -24,7 +24,7 @@ export const from =
 
 export function assign<T extends Dict, K extends Dict>(
   v: K | ((obj: T) => K)
-): (obj: T) => Merge<[T, K]>
+): (obj: T) => Assign<[T, K]>
 export function assign(v: any) {
   return (obj: any) => ({
     ...obj,
@@ -70,16 +70,16 @@ export const split =
 
 export const clone = <T extends Dict>(obj: T): T => structuredClone(obj)
 
-export function merge<T, U>(source: U): (target: T) => Merge<[T, U]>
+export function merge<T, U>(source: U): (target: T) => Assign<[T, U]>
 export function merge<T, U, V>(
   target: T
-): (source: U, source2: V) => Merge<[T, U, V]>
+): (source: U, source2: V) => Assign<[T, U, V]>
 export function merge<T, U, V, W>(
   target: T
-): (source: U, source2: V, source3: W) => Merge<[T, U, V, W]>
+): (source: U, source2: V, source3: W) => Assign<[T, U, V, W]>
 export function merge<T, U, V, W, X>(
   target: T
-): (source: U, source2: V, source3: W, source4: X) => Merge<[T, U, V, W, X]>
+): (source: U, source2: V, source3: W, source4: X) => Assign<[T, U, V, W, X]>
 export function merge(...args: Dict[]) {
   return (obj: any) => {
     if (!args.length) return obj
@@ -110,3 +110,15 @@ export const deleteKeys =
     }
     return clone
   }
+
+interface Bind {
+  <T extends Dict, K extends string, U>(key: K, fn: (value: T) => U): (
+    obj: T
+  ) => Assign<[T, Record<K, U>]>
+}
+
+export const bind: Bind = (key, fn) => (obj) =>
+  ({
+    ...obj,
+    [key]: fn(obj[key]),
+  } as any)

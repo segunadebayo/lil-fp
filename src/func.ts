@@ -67,6 +67,48 @@ export function pipe<A, B, C, D, E, F, G, H, I, J>(
   fn8: (arg: H) => I,
   fn9: (arg: I) => J
 ): J
+export function pipe<A, B, C, D, E, F, G, H, I, J, K>(
+  value: A,
+  fn1: (arg: A) => B,
+  fn2: (arg: B) => C,
+  fn3: (arg: C) => D,
+  fn4: (arg: D) => E,
+  fn5: (arg: E) => F,
+  fn6: (arg: F) => G,
+  fn7: (arg: G) => H,
+  fn8: (arg: H) => I,
+  fn9: (arg: I) => J,
+  fn10: (arg: J) => K
+): K
+export function pipe<A, B, C, D, E, F, G, H, I, J, K, L>(
+  value: A,
+  fn1: (arg: A) => B,
+  fn2: (arg: B) => C,
+  fn3: (arg: C) => D,
+  fn4: (arg: D) => E,
+  fn5: (arg: E) => F,
+  fn6: (arg: F) => G,
+  fn7: (arg: G) => H,
+  fn8: (arg: H) => I,
+  fn9: (arg: I) => J,
+  fn10: (arg: J) => K,
+  fn11: (arg: K) => L
+): L
+export function pipe<A, B, C, D, E, F, G, H, I, J, K, L, M>(
+  value: A,
+  fn1: (arg: A) => B,
+  fn2: (arg: B) => C,
+  fn3: (arg: C) => D,
+  fn4: (arg: D) => E,
+  fn5: (arg: E) => F,
+  fn6: (arg: F) => G,
+  fn7: (arg: G) => H,
+  fn8: (arg: H) => I,
+  fn9: (arg: I) => J,
+  fn10: (arg: J) => K,
+  fn11: (arg: K) => L,
+  fn12: (arg: L) => M
+): M
 export function pipe(input: any, ...functions: any[]) {
   return functions.reduce((acc, fn) => fn(acc), input)
 }
@@ -146,9 +188,9 @@ export function tap<T>(fn: (value: T) => void) {
 }
 
 export const log =
-  <T>(label: string) =>
+  <T>(label: string, fn?: (a: T) => any) =>
   (v: T) => {
-    console.log(`${label}: `, v)
+    console.log(`${label}: `, fn?.(v) ?? v)
     return v
   }
 

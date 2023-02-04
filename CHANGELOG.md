@@ -1,5 +1,11 @@
 # lil-fp
 
+## 1.1.0
+
+### Minor Changes
+
+- Add `bind` to object fp
+
 ## 1.0.6
 
 ### Patch Changes
