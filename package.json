@@ -1,6 +1,6 @@
 {
   "name": "lil-fp",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "Functional programming utilities for TypeScript",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -11,10 +11,40 @@
       "import": "./dist/index.mjs",
       "require": "./dist/index.js"
     },
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.mjs",
-      "require": "./dist/*.js"
+    "./arr": {
+      "types": "./dist/arr.d.ts",
+      "import": "./dist/arr.mjs",
+      "require": "./dist/arr.js"
+    },
+    "./bool": {
+      "types": "./dist/bool.d.ts",
+      "import": "./dist/bool.mjs",
+      "require": "./dist/bool.js"
+    },
+    "./func": {
+      "types": "./dist/func.d.ts",
+      "import": "./dist/func.mjs",
+      "require": "./dist/func.js"
+    },
+    "./logic": {
+      "types": "./dist/logic.d.ts",
+      "import": "./dist/logic.mjs",
+      "require": "./dist/logic.js"
+    },
+    "./is": {
+      "types": "./dist/is.d.ts",
+      "import": "./dist/is.mjs",
+      "require": "./dist/is.js"
+    },
+    "./obj": {
+      "types": "./dist/obj.d.ts",
+      "import": "./dist/obj.mjs",
+      "require": "./dist/obj.js"
+    },
+    "./task": {
+      "types": "./dist/task.d.ts",
+      "import": "./dist/task.mjs",
+      "require": "./dist/task.js"
     },
     "./package.json": "./package.json"
   },
