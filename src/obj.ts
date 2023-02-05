@@ -1,5 +1,13 @@
 import { isFunc, isObj } from './is'
-import { Compact, Dict, Assign, Split, SplitProp, Simplify } from './types'
+import {
+  Assign,
+  Compact,
+  Dict,
+  Path,
+  Simplify,
+  Split,
+  SplitProp,
+} from './types'
 
 export const fromEntries = <T extends Dict>(
   entries:
@@ -133,3 +141,27 @@ export const bind: Bind = (key, fn) => (obj) =>
     ...obj,
     [key]: fn(obj[key]),
   })
+
+type Defaults<T extends Dict, K extends Partial<T>> = Simplify<
+  Omit<T, keyof K> & Required<K>
+>
+
+export const defaults =
+  <T extends Dict, K extends Partial<T>>(defaults: K) =>
+  (obj: T): Defaults<T, K> =>
+    cast({
+      ...defaults,
+      ...obj,
+    })
+
+export const get =
+  <T extends Dict, K extends Path<T>, V>(key: K, fallback?: V) =>
+  (obj: T): T[K] | V => {
+    let keys = key.split('.')
+    let i = 0
+    while (obj[keys[i]]) {
+      obj = obj[keys[i]]
+      i++
+    }
+    return (obj ?? fallback) as any
+  }
