@@ -139,7 +139,7 @@ interface Bind {
 export const bind: Bind = (key, fn) => (obj) =>
   cast({
     ...obj,
-    [key]: fn(obj[key]),
+    [key]: fn(obj),
   })
 
 type Defaults<T extends Dict, K extends Partial<T>> = Simplify<
