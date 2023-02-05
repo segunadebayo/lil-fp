@@ -155,13 +155,13 @@ export const defaults =
     })
 
 export const get =
-  <T extends Dict, K extends Path<T>, V>(key: K, fallback?: V) =>
-  (obj: T): T[K] | V => {
+  <T extends Dict, K extends Path<T>>(key: K, undef?: T[K]) =>
+  (obj: T): T[K] => {
     let keys = key.split('.')
     let i = 0
     while (obj[keys[i]]) {
       obj = obj[keys[i]]
       i++
     }
-    return (obj ?? fallback) as any
+    return cast(obj ?? undef)
   }

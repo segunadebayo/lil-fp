@@ -1,6 +1,6 @@
 {
   "name": "lil-fp",
-  "version": "1.2.1",
+  "version": "1.2.3",
   "description": "Functional programming utilities for TypeScript",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
