@@ -153,14 +153,25 @@ export const defaults =
       ...obj,
     })
 
+const isSafeKey = (key: any) =>
+  key !== '__proto__' && key !== 'prototype' && key !== 'constructor'
+
 export const get =
-  <T extends Dict, K extends Path<T>>(key: K, undef?: T[K]) =>
+  <T extends Dict, K extends Path<T>>(path: K, undef?: T[K]) =>
   (obj: T): T[K] => {
-    let keys = key.split('.')
-    let i = 0
-    while (obj[keys[i]]) {
-      obj = obj[keys[i]]
-      i++
+    const keys = Array.isArray(path) ? path : path.split('.')
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i]
+      if (
+        !obj ||
+        !Object.prototype.hasOwnProperty.call(obj, key) ||
+        !isSafeKey(key)
+      ) {
+        // @ts-ignore
+        obj = undefined
+        break
+      }
+      obj = obj[key]
     }
     return cast(obj ?? undef)
   }
