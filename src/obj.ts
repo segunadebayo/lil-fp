@@ -1,3 +1,4 @@
+import { cast } from './func'
 import { isFunc, isObj } from './is'
 import {
   Assign,
@@ -117,8 +118,6 @@ export const omit =
     }
     return clone
   }
-
-export const cast = <T>(v: any): T => v
 
 export const pick =
   <T extends Dict, K extends keyof T>(keys: K[]) =>

@@ -194,7 +194,9 @@ export const log =
     return v
   }
 
-export const done = () => void 0
+export const cast = <T>(v: any): T => v
+
+export const noop = () => void 0
 
 export const memo = <T extends (...args: any[]) => any>(fn: T): T => {
   const cache = Object.create(null)
@@ -204,3 +206,13 @@ export const memo = <T extends (...args: any[]) => any>(fn: T): T => {
   }
   return func as T
 }
+
+export const tryCatch =
+  <T, U, K>(fn: (v: T) => U, onError?: (err: unknown, v: T) => K) =>
+  (v: T): U | (K extends void ? undefined : K) => {
+    try {
+      return fn(v)
+    } catch (err) {
+      return cast(onError?.(err, v))
+    }
+  }

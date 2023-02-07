@@ -41,10 +41,10 @@
       "import": "./dist/obj.mjs",
       "require": "./dist/obj.js"
     },
-    "./task": {
-      "types": "./dist/task.d.ts",
-      "import": "./dist/task.mjs",
-      "require": "./dist/task.js"
+    "./option": {
+      "types": "./dist/option.d.ts",
+      "import": "./dist/option.mjs",
+      "require": "./dist/option.js"
     },
     "./package.json": "./package.json"
   },
