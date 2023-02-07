@@ -1,6 +1,6 @@
 {
   "name": "lil-fp",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Functional programming utilities for TypeScript",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -47,6 +47,34 @@
       "require": "./dist/option.js"
     },
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      ".": [
+        "dist/index.d.ts"
+      ],
+      "arr": [
+        "dist/arr.d.ts"
+      ],
+      "bool": [
+        "dist/bool.d.ts"
+      ],
+      "func": [
+        "dist/func.d.ts"
+      ],
+      "logic": [
+        "dist/logic.d.ts"
+      ],
+      "is": [
+        "dist/is.d.ts"
+      ],
+      "obj": [
+        "dist/obj.d.ts"
+      ],
+      "option": [
+        "dist/option.d.ts"
+      ]
+    }
   },
   "files": [
     "dist",
