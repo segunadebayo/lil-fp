@@ -4,6 +4,7 @@ type Some<T> = { _tag: 'Some'; value: T }
 
 export const none: Option<never> = { _tag: 'None' }
 export const some = <T>(value: T): Option<T> => ({ _tag: 'Some', value })
+export const from = <T>(value: T): Option<T> => some(value)
 
 export const fromNullable = <T>(value: T | null | undefined): Option<T> =>
   value == null ? none : some(value)
@@ -20,6 +21,8 @@ export const fromExecution = <T>(
 
 export const isNone = <T>(o: Option<T>): o is None => o._tag === 'None'
 export const isSome = <T>(o: Option<T>): o is Some<T> => o._tag === 'Some'
+const isOption = <T>(o: any): o is Option<T> =>
+  o._tag === 'None' || o._tag === 'Some'
 
 export const map =
   <T, U>(f: (value: T) => U) =>
@@ -49,6 +52,16 @@ export const match =
     isNone(o) ? onNone() : onSome(o.value)
 
 export const alt =
-  <T>(v: () => Option<T>) =>
-  (o: Option<T>): Option<T> =>
-    isNone(o) ? v() : o
+  <T>(v: () => Option<T> | T) =>
+  (o: Option<T>): Option<T> => {
+    const vv = v()
+    if (isOption(vv)) return isNone(o) ? vv : o
+    return isNone(o) ? some(vv) : o
+  }
+
+export const tap =
+  <T>(f: (v: T) => void) =>
+  (o: Option<T>): Option<T> => {
+    if (isSome(o)) f(o.value)
+    return o
+  }

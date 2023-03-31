@@ -1,5 +1,11 @@
 # lil-fp
 
+## 1.3.1
+
+### Patch Changes
+
+- Add `Opt.tap` and widen `Opt.alt` type
+
 ## 1.3.0
 
 ### Minor Changes
