@@ -1,5 +1,12 @@
 # lil-fp
 
+## 1.3.0
+
+### Minor Changes
+
+- - Add `alt` to option type
+  - Add `flat` to array type
+
 ## 1.1.0
 
 ### Minor Changes
