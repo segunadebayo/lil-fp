@@ -73,3 +73,5 @@ export const concat =
 
 export const compact = <T>(arr: (T | undefined)[]): T[] =>
   arr.filter((v) => v !== undefined) as T[]
+
+export const flat = <T>(arr: T[][]): T[] => arr.flat()
