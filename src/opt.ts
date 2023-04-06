@@ -51,7 +51,7 @@ export const match =
   (o: Option<T>): U =>
     isNone(o) ? onNone() : onSome(o.value)
 
-export const alt =
+export const orElse =
   <T>(v: () => Option<T> | T) =>
   (o: Option<T>): Option<T> => {
     const vv = v()

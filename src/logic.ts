@@ -2,7 +2,7 @@ export const match = <T, R>(...fns: ((v: T) => R)[]) => {
   return (v: T) => {
     for (const fn of fns) {
       const x = fn(v)
-      if (x !== undefined) return x
+      if (x != null) return x
     }
   }
 }
@@ -26,8 +26,8 @@ export const otherwise =
   (v: T) =>
     when(() => true, fn)(v)
 
-export const alt =
+export const orElse =
   <T, U>(u: U | (() => U)) =>
-  (v: T | undefined): T | U =>
+  (v: T | null | undefined): T | U =>
     // @ts-ignore
-    v === undefined ? (typeof u === 'function' ? u() : u) : v
+    v == null ? (typeof u === 'function' ? u() : u) : v

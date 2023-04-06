@@ -1,5 +1,12 @@
 # lil-fp
 
+## 1.4.0
+
+### Minor Changes
+
+- - Add `and` to boolean helpers
+  - Rename `alt` to `orElse`
+
 ## 1.3.1
 
 ### Patch Changes
