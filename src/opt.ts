@@ -2,8 +2,10 @@ type Option<T> = None | Some<T>
 type None = { _tag: 'None' }
 type Some<T> = { _tag: 'Some'; value: T }
 
-export const none: Option<never> = { _tag: 'None' }
-export const some = <T>(value: T): Option<T> => ({ _tag: 'Some', value })
+export const none: Option<never> = Object.freeze({ _tag: 'None' })
+export const some = <T>(value: T): Option<T> =>
+  Object.freeze({ _tag: 'Some', value })
+
 export const from = <T>(value: T): Option<T> => some(value)
 
 export const fromNullable = <T>(value: T | null | undefined): Option<T> =>
@@ -65,3 +67,8 @@ export const tap =
     if (isSome(o)) f(o.value)
     return o
   }
+
+export const filter =
+  <T>(f: (v: T) => boolean) =>
+  (o: Option<T>): Option<T> =>
+    isNone(o) ? none : f(o.value) ? o : none
