@@ -198,6 +198,8 @@ export const cast = <T>(v: any): T => v
 
 export const noop = () => void 0
 
+export const identity = <T>(v: T) => v
+
 export const memo = <T extends (...args: any[]) => any>(fn: T): T => {
   const cache = Object.create(null)
   const func = (arg: any) => {
