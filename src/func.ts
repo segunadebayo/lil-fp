@@ -1,3 +1,6 @@
+/**
+ * Performs left-to-right function composition (the first argument must be a value).
+ */
 export function pipe<A, B>(value: A, fn1: (arg: A) => B): B
 export function pipe<A, B, C>(
   value: A,
@@ -113,6 +116,9 @@ export function pipe(input: any, ...functions: any[]) {
   return functions.reduce((acc, fn) => fn(acc), input)
 }
 
+/**
+ * Performs left-to-right function composition and returns a new function, the first argument may have any arity, the remaining arguments must be unary.
+ */
 export function flow<A extends any[], B>(
   fn1: (...args: A) => B
 ): (...args: A) => B
@@ -180,6 +186,9 @@ export function flow(...functions: any[]) {
   return (input: any) => functions.reduce((acc, fn) => fn(acc), input)
 }
 
+/**
+ * Invokes the given function with the given value, and then returns the same value.
+ */
 export function tap<T>(fn: (value: T) => void) {
   return (value: T) => {
     fn(value)
@@ -187,6 +196,9 @@ export function tap<T>(fn: (value: T) => void) {
   }
 }
 
+/**
+ * Useful for logging values in a pipeline
+ */
 export const log =
   <T>(label: string, fn?: (a: T) => any) =>
   (v: T) => {
@@ -194,12 +206,24 @@ export const log =
     return v
   }
 
+/**
+ * Casts a value to a specific type
+ */
 export const cast = <T>(v: any): T => v
 
+/**
+ * Empty, no-op function
+ */
 export const noop = () => void 0
 
+/**
+ * Identity function
+ */
 export const identity = <T>(v: T) => v
 
+/**
+ * Returns a function with memoized results
+ */
 export const memo = <T extends (...args: any[]) => any>(fn: T): T => {
   const cache = Object.create(null)
   const func = (arg: any) => {
@@ -209,6 +233,9 @@ export const memo = <T extends (...args: any[]) => any>(fn: T): T => {
   return func as T
 }
 
+/**
+ * Run a execution in a try/catch block, and return the result of the function or the result of the onError function
+ */
 export const tryCatch =
   <T, U, K>(fn: (v: T) => U, onError?: (err: unknown, v: T) => K) =>
   (v: T): U | (K extends void ? undefined : K) => {

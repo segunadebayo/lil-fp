@@ -3,6 +3,7 @@ import { isFunc, isObj } from './is'
 import {
   Assign,
   Compact,
+  Defaults,
   Dict,
   Path,
   Simplify,
@@ -10,12 +11,18 @@ import {
   SplitProp,
 } from './types'
 
+/**
+ * Returns an object created by key-value entries for properties and methods
+ */
 export const fromEntries = <T extends Dict>(
   entries:
     | IterableIterator<[string, T[keyof T]]>
     | Iterable<[string, T[keyof T]]>
 ): T => Object.fromEntries(entries) as T
 
+/**
+ * Returns a new object with the key-value pairs from the original object, but the keys transformed by the given function.
+ */
 export const map =
   <T extends Dict>(
     f: (key: string, value: T[keyof T]) => [string, T[keyof T]]
@@ -23,14 +30,15 @@ export const map =
   (obj: T): T =>
     fromEntries(Object.entries(obj).map(([k, v]) => f(k, v)))
 
+/**
+ * Returns the entries of an object as an array of key-value pairs
+ */
 export const entries = <T extends Dict>(obj: T): [keyof T, T[keyof T]][] =>
   Object.entries(obj)
 
-export const from =
-  <K extends string, T>(key: K) =>
-  (value: T): Record<K, T> =>
-    fromEntries([[key, value]])
-
+/**
+ * Assign object properties to an existing object in a pipeline
+ */
 export function assign<T extends Dict, K extends Dict>(
   v: K | ((obj: T) => K)
 ): (obj: T) => Assign<[T, K]>
@@ -41,22 +49,37 @@ export function assign(v: any) {
   })
 }
 
+/**
+ * Assigns a value in a pipeline to a key in an object
+ */
 export const assignTo =
   <K extends string, T extends Dict>(key: K) =>
   (prev: T): Record<K, T> =>
     fromEntries([[key, prev]])
 
+/**
+ * Returns the keys of an object
+ */
 export const keys = <T extends Dict>(obj: T): (keyof T)[] =>
   Object.keys(obj) as string[]
 
+/**
+ * Filters an object entries by a predicate function
+ */
 export const filter =
   <T extends Dict>(f: (key: keyof T, value: T[keyof T]) => boolean) =>
   (obj: T): T =>
     fromEntries(Object.entries(obj).filter(([k, v]) => f(k, v)))
 
+/**
+ * Returns a new object with nullish values removed
+ */
 export const compact = <T extends Dict>(obj: T): Compact<T> =>
-  filter((_, v) => v !== undefined)(obj) as any
+  filter((_, v) => v != null)(obj) as any
 
+/**
+ * Split an object into multiple objects based on a predicate function
+ */
 export const split =
   <T extends Dict, K extends [SplitProp<T>, ...SplitProp<T>[]]>(...keys: K) =>
   (obj: T): Split<T, K> => {
@@ -77,8 +100,9 @@ export const split =
     return keys.map(fn).concat(split(dKeys)) as any
   }
 
-export const clone = <T extends Dict>(obj: T): T => structuredClone(obj)
-
+/**
+ * Merge multiple objects to an object in a pipeline
+ */
 export function merge<T, U>(source: U): (target: T) => Assign<[T, U]>
 export function merge<T, U, V>(
   target: T
@@ -109,6 +133,9 @@ export function merge(...args: Dict[]) {
   }
 }
 
+/**
+ * Omit properties from an object in a pipeline
+ */
 export const omit =
   <T extends Dict, K extends keyof T>(keys: K[]) =>
   (obj: T): Simplify<Omit<T, K>> => {
@@ -119,6 +146,9 @@ export const omit =
     return clone
   }
 
+/**
+ * Pick properties from an object in a pipeline
+ */
 export const pick =
   <T extends Dict, K extends keyof T>(keys: K[]) =>
   (obj: T): Simplify<Pick<T, K>> => {
@@ -129,22 +159,9 @@ export const pick =
     return clone as any
   }
 
-interface Bind {
-  <T extends Dict, K extends string, U>(key: K, fn: (value: T) => U): (
-    obj: T
-  ) => Assign<[T, Record<K, U>]>
-}
-
-export const bind: Bind = (key, fn) => (obj) =>
-  cast({
-    ...obj,
-    [key]: fn(obj),
-  })
-
-type Defaults<T extends Dict, K extends Partial<T>> = Simplify<
-  Omit<T, keyof K> & Required<K>
->
-
+/**
+ * Assign default values to an object in a pipeline
+ */
 export const defaults =
   <T extends Dict, K extends Partial<T>>(defaults: K) =>
   (obj: T): Defaults<T, K> =>
@@ -156,6 +173,9 @@ export const defaults =
 const isSafeKey = (key: any) =>
   key !== '__proto__' && key !== 'prototype' && key !== 'constructor'
 
+/**
+ * Get a property from an object by dot notation
+ */
 export const get =
   <T extends Dict, K extends Path<T>>(path: K, undef?: T[K]) =>
   (obj: T): T[K] => {

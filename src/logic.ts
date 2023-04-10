@@ -17,7 +17,9 @@ export function when<T, U extends T, R>(
 ): (v: T) => R | undefined
 export function when(predicate: (v: any) => boolean, fn: (v: any) => any) {
   return (v: any) => {
-    if (predicate(v)) return fn(v)
+    if (predicate(v)) {
+      return fn(v)
+    }
   }
 }
 
