@@ -6,7 +6,12 @@ export const none: Option<never> = Object.freeze({ _tag: 'None' })
 export const some = <T>(value: T): Option<T> =>
   Object.freeze({ _tag: 'Some', value })
 
-export const from = <T>(value: T): Option<T> => some(value)
+export function fromPredicate<T, U extends T>(
+  predicate: (v: T) => v is U
+): (v: T) => Option<U>
+export function fromPredicate<T>(predicate: (v: T) => boolean) {
+  return (v: T): Option<T> => (predicate(v) ? some(v) : none)
+}
 
 export const fromNullable = <T>(value: T | null | undefined): Option<T> =>
   value == null ? none : some(value)

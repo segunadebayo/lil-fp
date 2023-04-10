@@ -1,5 +1,11 @@
 # lil-fp
 
+## 1.4.2
+
+### Patch Changes
+
+- Add missing array types
+
 ## 1.4.1
 
 ### Patch Changes
@@ -10,8 +16,8 @@
 
 ### Minor Changes
 
-- - Add `and` to boolean helpers
-  - Rename `alt` to `orElse`
+- Add `and` to boolean helpers
+- Rename `alt` to `orElse`
 
 ## 1.3.1
 
@@ -23,8 +29,8 @@
 
 ### Minor Changes
 
-- - Add `alt` to option type
-  - Add `flat` to array type
+- Add `alt` to option type
+- Add `flat` to array type
 
 ## 1.1.0
 

@@ -1,6 +1,6 @@
 {
   "name": "lil-fp",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Functional programming utilities for TypeScript",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -99,10 +99,10 @@
   "author": "Segun Adebayo",
   "license": "MIT",
   "devDependencies": {
-    "@changesets/cli": "^2.26.0",
+    "@changesets/cli": "^2.26.1",
     "@mobily/ts-belt": "^3.13.1",
-    "prettier": "^2.8.3",
-    "tsup": "^6.5.0",
-    "typescript": "^4.9.4"
+    "prettier": "^2.8.7",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.4"
   }
 }
