@@ -3,30 +3,30 @@ export const from = <T>(
 ): T[] => Array.from(v)
 
 export const filter =
-  <T>(f: (v: T) => boolean) =>
+  <T>(f: (v: T, index: number, array: T[]) => boolean) =>
   (arr: T[]): T[] =>
     arr.filter(f)
 
 export const map =
-  <T, U>(f: (v: T) => U) =>
+  <T, U>(f: (v: T, index: number, array: T[]) => U) =>
   (arr: T[]): U[] =>
     arr.map(f)
 
 export const reduce =
-  <T, U>(f: (acc: U, v: T) => U, init: U) =>
+  <T, U>(f: (acc: U, v: T, index: number, array: T[]) => U, init: U) =>
   (arr: T[]): U =>
     arr.reduce(f, init)
 
 export const filterMap =
-  <T, U>(f: (v: T) => U | undefined) =>
+  <T, U>(f: (v: T, index: number, array: T[]) => U | undefined) =>
   (arr: T[]): U[] =>
-    arr.reduce((acc, v) => {
-      const x = f(v)
+    arr.reduce((acc, v, index, arr) => {
+      const x = f(v, index, arr)
       return x === undefined ? acc : [...acc, x]
     }, [] as U[])
 
 export const forEach =
-  <T>(f: (v: T) => void) =>
+  <T>(f: (v: T, index: number, array: T[]) => void) =>
   (arr: T[]): void =>
     arr.forEach(f)
 
@@ -52,12 +52,12 @@ export const at =
 export const uniq = <T>(arr: T[]): T[] => [...new Set(arr)]
 
 export const some =
-  <T>(f: (v: T) => boolean) =>
+  <T>(f: (v: T, index: number, array: T[]) => boolean) =>
   (arr: T[]): boolean =>
     arr.some(f)
 
 export const every =
-  <T>(f: (v: T) => boolean) =>
+  <T>(f: (v: T, index: number, array: T[]) => boolean) =>
   (arr: T[]): boolean =>
     arr.every(f)
 
