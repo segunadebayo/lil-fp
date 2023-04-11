@@ -1,5 +1,17 @@
 # lil-fp
 
+## 1.4.4
+
+### Patch Changes
+
+- Add TS doc comments
+
+## 1.4.3
+
+### Patch Changes
+
+- 5171a85: Option: Replace `from` with `fromPredicate`
+
 ## 1.4.2
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "lil-fp",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "Functional programming utilities for TypeScript",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -84,7 +84,7 @@
   "scripts": {
     "build": "tsup",
     "clean": "rm -rf dist",
-    "release": "pnpm changeset version && pnpm changeset publish",
+    "release": "pnpm changeset version && pnpm publish --no-git-checks",
     "prerelease": "pnpm build"
   },
   "publishConfig": {
