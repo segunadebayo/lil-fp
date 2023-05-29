@@ -2,6 +2,7 @@ import { cast } from './func'
 import { isFunc, isObj } from './is'
 import {
   Assign,
+  Bind,
   Compact,
   Defaults,
   Dict,
@@ -56,6 +57,15 @@ export const assignTo =
   <K extends string, T extends Dict>(key: K) =>
   (prev: T): Record<K, T> =>
     fromEntries([[key, prev]])
+
+/**
+ * Returns a new object that specified key whose value is the result of calling the provided function
+ */
+export const bind: Bind = (key, fn) => (obj) =>
+  cast({
+    ...obj,
+    [key]: fn(obj),
+  })
 
 /**
  * Returns the keys of an object
