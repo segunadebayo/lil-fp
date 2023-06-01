@@ -1,5 +1,5 @@
 import { cast } from './func'
-import { isFunc, isObj } from './is'
+import { isFunc, isObj, isArr } from './is'
 import {
   Assign,
   Bind,
@@ -205,3 +205,62 @@ export const get =
     }
     return cast(obj ?? undef)
   }
+
+export const isEmpty = (v: Dict) => Object.keys(v).length === 0
+
+export const has =
+  <T extends Dict>(key: keyof T) =>
+  (obj: T): boolean =>
+    Object.prototype.hasOwnProperty.call(obj, key)
+
+/* -----------------------------------------------------------------------------
+ * Walk Object
+ * -----------------------------------------------------------------------------*/
+
+type Predicate<R = any> = (value: any, path: string[]) => R
+
+export type WalkResult<T, K> = {
+  [Prop in keyof T]: T[Prop] extends Array<any>
+    ? WalkResult<T[Prop][number], K>[]
+    : T[Prop] extends Record<string, unknown>
+    ? WalkResult<T[Prop], K>
+    : K
+}
+
+type WalkStopFn = (value: any, path: string[]) => boolean
+
+type WalkOptions = {
+  stop?: WalkStopFn
+  getKey?(prop: string): string
+}
+
+export function walk<T, K>(
+  target: T,
+  predicate: Predicate<K>,
+  options: WalkOptions = {}
+): WalkResult<T, ReturnType<Predicate<K>>> {
+  const { stop, getKey } = options
+
+  function inner(value: any, path: string[] = []): any {
+    if (isObj(value) || isArr(value)) {
+      const result: Record<string, string> = {}
+
+      for (const [prop, child] of Object.entries(value)) {
+        const key = getKey?.(prop) ?? prop
+        const childPath = [...path, key]
+
+        if (stop?.(value, childPath)) {
+          return predicate(value, path)
+        }
+
+        result[key] = inner(child, childPath)
+      }
+
+      return result
+    }
+
+    return predicate(value, path)
+  }
+
+  return inner(target)
+}

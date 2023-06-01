@@ -1,0 +1,4 @@
+{
+  "main": "dist/lil-fp-bool.cjs.js",
+  "module": "dist/lil-fp-bool.esm.js"
+}

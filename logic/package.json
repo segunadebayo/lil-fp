@@ -1,0 +1,4 @@
+{
+  "main": "dist/lil-fp-logic.cjs.js",
+  "module": "dist/lil-fp-logic.esm.js"
+}

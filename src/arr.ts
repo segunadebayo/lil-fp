@@ -9,16 +9,30 @@ export const from = <T>(v: Iterable<T> | ArrayLike<T> | T[]): T[] =>
  */
 export const filter =
   <T>(f: (v: T, index: number, array: T[]) => boolean) =>
-  (arr: T[]): T[] =>
-    arr.filter(f)
+  (arr: T[]): T[] => {
+    const len = arr.length
+    const filtered: T[] = []
+    for (let i = 0; i < len; i++) {
+      if (f(arr[i], i, arr)) {
+        filtered.push(arr[i])
+      }
+    }
+    return filtered
+  }
 
 /**
  * Calls a defined callback function on each element of an array, and returns an array that contains the results.
  */
 export const map =
   <T, U>(f: (v: T, index: number, array: T[]) => U) =>
-  (arr: T[]): U[] =>
-    arr.map(f)
+  (arr: T[]): U[] => {
+    const len = arr.length
+    const mapped = new Array<U>(len)
+    for (let i = 0; i < len; i++) {
+      mapped[i] = f(arr[i], i, arr)
+    }
+    return mapped
+  }
 
 /**
  * Calls the specified callback function for all the elements in an array.
@@ -28,28 +42,26 @@ export const map =
  */
 export const reduce =
   <T, U>(f: (acc: U, v: T, index: number, array: T[]) => U, init: U) =>
-  (arr: T[]): U =>
-    arr.reduce(f, init)
-
-/**
- * Calls the specified callback function for all the elements in an array.
- * The return value is the non-nullable result of the callback function.
- */
-export const filterMap =
-  <T, U>(f: (v: T, index: number, array: T[]) => U | undefined | null) =>
-  (arr: T[]): U[] =>
-    arr.reduce((acc, v, index, arr) => {
-      const x = f(v, index, arr)
-      return x == null ? acc : [...acc, x]
-    }, [] as U[])
+  (arr: T[]): U => {
+    const len = arr.length
+    let acc = init
+    for (let i = 0; i < len; i++) {
+      acc = f(acc, arr[i], i, arr)
+    }
+    return acc
+  }
 
 /**
  * Performs the specified action for each element in an array.
  */
 export const forEach =
   <T>(f: (v: T, index: number, array: T[]) => void) =>
-  (arr: T[]): void =>
-    arr.forEach(f)
+  (arr: T[]): void => {
+    const len = arr.length
+    for (let i = 0; i < len; i++) {
+      f(arr[i], i, arr)
+    }
+  }
 
 /**
  * Returns the next element of an array based on the current index.
@@ -82,29 +94,45 @@ export const tail = <T>(arr: T[]): T | undefined => arr[arr.length - 1]
  */
 export const at =
   <T>(i: number) =>
-  (arr: T[]): T | undefined =>
-    arr.at(i)
+  (arr: T[]): T | undefined => {
+    const index = i < 0 ? arr.length + i : i
+    return arr[index]
+  }
 
 /**
  * Returns the unique elements of an array.
  */
-export const uniq = <T>(arr: T[]): T[] => [...new Set(arr)]
+export const uniq = <T>(arr: T[]): T[] => Array.from(new Set(arr))
 
 /**
  * Determines whether the specified callback function returns true for any element of an array.
  */
 export const some =
   <T>(f: (v: T, index: number, array: T[]) => boolean) =>
-  (arr: T[]): boolean =>
-    arr.some(f)
+  (arr: T[]): boolean => {
+    const len = arr.length
+    for (let i = 0; i < len; i++) {
+      if (f(arr[i], i, arr)) {
+        return true
+      }
+    }
+    return false
+  }
 
 /**
  * Determines whether the specified callback function returns true for all elements of an array.
  */
 export const every =
   <T>(f: (v: T, index: number, array: T[]) => boolean) =>
-  (arr: T[]): boolean =>
-    arr.every(f)
+  (arr: T[]): boolean => {
+    const len = arr.length
+    for (let i = 0; i < len; i++) {
+      if (!f(arr[i], i, arr)) {
+        return false
+      }
+    }
+    return true
+  }
 
 /**
  * Determines whether an array includes a certain element

@@ -1,0 +1,4 @@
+{
+  "main": "dist/lil-fp-task.cjs.js",
+  "module": "dist/lil-fp-task.esm.js"
+}

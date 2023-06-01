@@ -10,7 +10,7 @@
 
 ### Patch Changes
 
-- 5171a85: Option: Replace `from` with `fromPredicate`
+- Option: Replace `from` with `fromPredicate`
 
 ## 1.4.2
 

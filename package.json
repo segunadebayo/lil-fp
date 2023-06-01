@@ -2,87 +2,39 @@
   "name": "lil-fp",
   "version": "1.4.5",
   "description": "Functional programming utilities for TypeScript",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./arr": {
-      "types": "./dist/arr.d.ts",
-      "import": "./dist/arr.mjs",
-      "require": "./dist/arr.js"
-    },
-    "./bool": {
-      "types": "./dist/bool.d.ts",
-      "import": "./dist/bool.mjs",
-      "require": "./dist/bool.js"
-    },
-    "./func": {
-      "types": "./dist/func.d.ts",
-      "import": "./dist/func.mjs",
-      "require": "./dist/func.js"
-    },
-    "./logic": {
-      "types": "./dist/logic.d.ts",
-      "import": "./dist/logic.mjs",
-      "require": "./dist/logic.js"
-    },
-    "./is": {
-      "types": "./dist/is.d.ts",
-      "import": "./dist/is.mjs",
-      "require": "./dist/is.js"
-    },
-    "./obj": {
-      "types": "./dist/obj.d.ts",
-      "import": "./dist/obj.mjs",
-      "require": "./dist/obj.js"
-    },
-    "./option": {
-      "types": "./dist/option.d.ts",
-      "import": "./dist/option.mjs",
-      "require": "./dist/option.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "typesVersions": {
-    "*": {
-      ".": [
-        "dist/index.d.ts"
-      ],
-      "arr": [
-        "dist/arr.d.ts"
-      ],
-      "bool": [
-        "dist/bool.d.ts"
-      ],
-      "func": [
-        "dist/func.d.ts"
-      ],
-      "logic": [
-        "dist/logic.d.ts"
-      ],
-      "is": [
-        "dist/is.d.ts"
-      ],
-      "obj": [
-        "dist/obj.d.ts"
-      ],
-      "option": [
-        "dist/option.d.ts"
-      ]
-    }
+  "main": "dist/lil-fp.cjs.js",
+  "module": "dist/lil-fp.esm.js",
+  "preconstruct": {
+    "entrypoints": [
+      "index.ts",
+      "arr.ts",
+      "bool.ts",
+      "func.ts",
+      "logic.ts",
+      "is.ts",
+      "obj.ts",
+      "task.ts",
+      "opt.ts"
+    ]
   },
   "files": [
     "dist",
-    "src"
+    "src",
+    "arr",
+    "bool",
+    "task",
+    "func",
+    "logic",
+    "is",
+    "obj",
+    "opt"
   ],
   "sideEffects": false,
   "scripts": {
-    "build": "tsup",
+    "postinstall": "preconstruct dev",
+    "build": "preconstruct build",
+    "dev": "preconstruct dev",
     "clean": "rm -rf dist",
     "release": "pnpm changeset version && pnpm publish --no-git-checks",
     "prerelease": "pnpm build"
@@ -99,10 +51,11 @@
   "author": "Segun Adebayo",
   "license": "MIT",
   "devDependencies": {
+    "@babel/preset-typescript": "^7.21.5",
     "@changesets/cli": "^2.26.1",
     "@mobily/ts-belt": "^3.13.1",
+    "@preconstruct/cli": "^2.7.0",
     "prettier": "^2.8.7",
-    "tsup": "^6.7.0",
     "typescript": "^5.0.4"
   }
 }

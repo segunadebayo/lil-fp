@@ -2,6 +2,8 @@
   "exclude": ["node_modules"],
   "include": ["src"],
   "compilerOptions": {
+    "lib": ["ESNext", "DOM"],
+    "module": "es2020",
     "allowSyntheticDefaultImports": true,
     "downlevelIteration": true,
     "esModuleInterop": true,
