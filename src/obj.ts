@@ -177,7 +177,7 @@ export const defaults =
   (obj: T): Defaults<T, K> =>
     cast({
       ...defaults,
-      ...obj,
+      ...compact(obj),
     })
 
 const isSafeKey = (key: any) =>

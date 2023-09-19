@@ -6,13 +6,17 @@ export type Compact<T extends Dict> = {
 
 export type SplitProp<T> = ReadonlyArray<keyof T>
 
+export type DistributiveOmit<T, K extends keyof any> = T extends any
+  ? Omit<T, K>
+  : never
+
 export type Split<T, K extends SplitProp<T>[]> = [
   ...{
     [P in keyof K]: P extends `${number}`
       ? Pick<T, Extract<K[P], ReadonlyArray<keyof T>>[number]>
       : never
   },
-  Omit<T, K[number][number]>
+  DistributiveOmit<T, K[number][number]>
 ]
 
 export type PromiseFactory<T = unknown> = () => PromiseLike<T>
@@ -24,7 +28,7 @@ export type Awaited<T> = T extends undefined
   : T
 
 export type Defaults<T extends Dict, K extends Partial<T>> = Simplify<
-  Omit<T, keyof K> & Required<K>
+  DistributiveOmit<T, keyof K> & Required<K>
 >
 
 export interface Bind {
@@ -35,7 +39,7 @@ export interface Bind {
 
 export type Simplify<T> = T extends any ? { [K in keyof T]: T[K] } : T
 
-type Merge<P1 = {}, P2 = {}> = Omit<P1, keyof P2> & P2
+type Merge<P1 = {}, P2 = {}> = DistributiveOmit<P1, keyof P2> & P2
 
 export type Assign<T extends unknown[], Target = {}> = T extends [
   infer Next,

@@ -15,6 +15,7 @@
       "is.ts",
       "obj.ts",
       "task.ts",
+      "str.ts",
       "opt.ts"
     ]
   },
@@ -27,6 +28,7 @@
     "func",
     "logic",
     "is",
+    "str",
     "obj",
     "opt"
   ],
@@ -37,7 +39,8 @@
     "dev": "preconstruct dev",
     "clean": "rm -rf dist",
     "release": "pnpm changeset version && pnpm publish --no-git-checks",
-    "prerelease": "pnpm build"
+    "prerelease": "pnpm build",
+    "test": "vitest"
   },
   "publishConfig": {
     "access": "public"
@@ -56,6 +59,7 @@
     "@mobily/ts-belt": "^3.13.1",
     "@preconstruct/cli": "^2.7.0",
     "prettier": "^2.8.7",
-    "typescript": "^5.0.4"
+    "typescript": "^5.0.4",
+    "vitest": "0.34.4"
   }
 }
